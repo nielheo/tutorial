@@ -1,19 +1,61 @@
 import * as React from "react";
-import "./App.css";
+import {
+  Collapse,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  Nav,
+  Navbar,
+  NavbarBrand,
+  NavbarToggler,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown
+} from "reactstrap";
 
-import logo from "./logo.svg";
+class App extends React.Component<{}, { isOpen: boolean }> {
+  constructor(props: any) {
+    super(props);
 
-class App extends React.Component {
+    this.state = {
+      isOpen: false
+    };
+  }
+
+  public toggle = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  };
+
   public render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+      <div>
+        <Navbar color="dark" dark={true} expand="md">
+          <NavbarBrand href="/">React's Tutorial</NavbarBrand>
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar={true}>
+            <Nav className="ml-auto" navbar={true}>
+              <NavItem>
+                <NavLink href="/components/">Components</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="https://github.com/">GitHub</NavLink>
+              </NavItem>
+              <UncontrolledDropdown nav={true} inNavbar={true}>
+                <DropdownToggle nav={true} caret={true}>
+                  Options
+                </DropdownToggle>
+                <DropdownMenu right={true}>
+                  <DropdownItem>Option 1</DropdownItem>
+                  <DropdownItem>Option 2</DropdownItem>
+                  <DropdownItem divider={true} />
+                  <DropdownItem>Reset</DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </Nav>
+          </Collapse>
+        </Navbar>
       </div>
     );
   }
