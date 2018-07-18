@@ -3,9 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/bootstrap": "^4.1.2",
+    "@types/react-router-dom": "^4.2.7",
+    "@types/reactstrap": "^6.0.0",
+    "bootstrap": "^4.1.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-scripts-ts": "2.16.0"
+    "react-router-dom": "^4.3.1",
+    "react-scripts-ts": "2.16.0",
+    "reactstrap": "^6.3.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",
@@ -15,19 +21,15 @@
     "precommit": "pretty-quick --staged"
   },
   "devDependencies": {
-    "@types/bootstrap": "^4.1.2",
     "@types/jest": "^23.3.0",
     "@types/node": "^10.5.2",
     "@types/react": "^16.4.6",
     "@types/react-dom": "^16.0.6",
-    "@types/reactstrap": "^6.0.0",
-    "bootstrap": "^4.1.2",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.2",
     "husky": "^0.14.3",
     "prettier": "^1.13.7",
     "pretty-quick": "^1.6.0",
-    "reactstrap": "^6.3.0",
     "typescript": "^2.9.2"
   }
 }
