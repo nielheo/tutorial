@@ -72,12 +72,12 @@ class AppBar extends React.Component<{}, { isOpen: boolean }> {
                 <DropdownItem divider={true} />
                 <DropdownItem>
                   <Nav
-                    to="/logout"
+                    to="/login"
                     className="dropdown-item"
                     activeClassName="dropdown-item"
                     tag={RRNavLink}
                   >
-                    Logout
+                    Login
                   </Nav>
                 </DropdownItem>
               </DropdownMenu>

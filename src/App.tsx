@@ -1,15 +1,21 @@
 import * as React from "react";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 import AppBar from "./components/appBar";
+import Router from "./Router";
 
-class App extends React.Component<{}, { isOpen: boolean }> {
+interface IAppProps extends RouteComponentProps<any> {}
+
+class App extends React.Component<IAppProps, {}> {
   public render() {
     return (
       <div>
-        <AppBar />
+        {this.props.location.pathname !== "/login" && <AppBar />}
         <Container fluid={true}>
           <Row className="py-3 px-2">
-            <Col xs={12} />
+            <Col xs={12}>
+              <Router />
+            </Col>
           </Row>
         </Container>
       </div>
@@ -17,4 +23,4 @@ class App extends React.Component<{}, { isOpen: boolean }> {
   }
 }
 
-export default App;
+export default withRouter(App);
