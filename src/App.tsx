@@ -12,7 +12,11 @@ class App extends React.Component<IAppProps, {}> {
       <div>
         {this.props.location.pathname !== "/login" && <AppBar />}
         <Container fluid={true}>
-          <Row className="py-3 px-2">
+          <Row
+            className={
+              this.props.location.pathname !== "/login" ? "py-3 px-2" : "p-0"
+            }
+          >
             <Col xs={12}>
               <Router />
             </Col>
