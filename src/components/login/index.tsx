@@ -15,18 +15,34 @@ import {
 
 export default class LoginForm extends React.Component<
   {},
-  { loggingIn: boolean }
+  { loggingIn: boolean; email: string; password: string }
 > {
   constructor(props: any) {
     super(props);
     this.state = {
-      loggingIn: false
+      email: "",
+      loggingIn: false,
+      password: ""
     };
   }
 
   public submit = () => {
     this.setState({
       loggingIn: true
+    });
+  };
+
+  public emailOnChanged = (e: any) => {
+    this.setState({
+      email: e.target.value,
+      loggingIn: false
+    });
+  };
+
+  public passwordOnChanged = (e: any) => {
+    this.setState({
+      loggingIn: false,
+      password: e.target.value
     });
   };
 
@@ -52,21 +68,26 @@ export default class LoginForm extends React.Component<
                     type="email"
                     name="email"
                     id="email"
-                    disabled={this.state.loggingIn}
+                    disabled={this.state.loggingIn && this.state.email !== ""}
+                    value={this.state.email}
+                    onChange={this.emailOnChanged}
+                    invalid={this.state.loggingIn && this.state.email === ""}
                   />
                 </FormGroup>
-                <FormGroup>
+                <FormGroup className="danger">
                   <Label for="password">Password</Label>
                   <Input
                     type="password"
                     name="password"
                     id="password"
                     disabled={this.state.loggingIn}
+                    value={this.state.password}
+                    onChange={this.passwordOnChanged}
                   />
                 </FormGroup>
                 <Button
                   onClick={this.submit}
-                  color="primary"
+                  color={this.state.loggingIn ? "gray" : "primary"}
                   disabled={this.state.loggingIn}
                 >
                   Login
