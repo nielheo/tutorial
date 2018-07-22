@@ -6,42 +6,77 @@ import {
   Col,
   Container,
   Form,
-  FormGroup,
-  Input,
-  Label,
+  Progress,
   Row
 } from "reactstrap";
+import Textbox from "../../controls/Textbox";
 // import Alert from "./Alert";
 
-export default class LoginForm extends React.Component<
-  {},
-  { loggingIn: boolean; email: string; password: string }
-> {
+interface ILoginStates {
+  clicked: boolean;
+  dataValid: boolean;
+  loggingIn: boolean;
+  email: string;
+  emailInvalid: boolean;
+  password: string;
+  passwordInvalid: boolean;
+}
+
+export default class LoginForm extends React.Component<{}, ILoginStates> {
   constructor(props: any) {
     super(props);
     this.state = {
+      clicked: false,
+      dataValid: false,
       email: "",
+      emailInvalid: true,
       loggingIn: false,
-      password: ""
+      password: "",
+      passwordInvalid: true
     };
   }
 
+  public setEmailValid = (valid: boolean) => {
+    if (this.state.emailInvalid === valid) {
+      this.setState({
+        emailInvalid: !valid
+      });
+    }
+  };
+
+  public setPasswordValid = (valid: boolean) => {
+    if (this.state.passwordInvalid === valid) {
+      this.setState({
+        passwordInvalid: !valid
+      });
+    }
+  };
+
   public submit = () => {
-    this.setState({
-      loggingIn: true
-    });
+    this.setState(
+      {
+        clicked: true
+      },
+      () => {
+        const isValid = !this.state.emailInvalid && !this.state.passwordInvalid;
+        if (isValid !== this.state.dataValid) {
+          this.setState({
+            dataValid: isValid,
+            loggingIn: isValid
+          });
+        }
+      }
+    );
   };
 
   public emailOnChanged = (e: any) => {
     this.setState({
-      email: e.target.value,
-      loggingIn: false
+      email: e.target.value
     });
   };
 
   public passwordOnChanged = (e: any) => {
     this.setState({
-      loggingIn: false,
       password: e.target.value
     });
   };
@@ -62,29 +97,36 @@ export default class LoginForm extends React.Component<
             >
               <CardTitle>Login</CardTitle>
               <Form>
-                <FormGroup>
-                  <Label for="email">Email</Label>
-                  <Input
-                    type="email"
-                    name="email"
-                    id="email"
-                    disabled={this.state.loggingIn && this.state.email !== ""}
-                    value={this.state.email}
-                    onChange={this.emailOnChanged}
-                    invalid={this.state.loggingIn && this.state.email === ""}
+                <Textbox
+                  id="email"
+                  disabled={this.state.loggingIn}
+                  label="Email"
+                  value={this.state.email}
+                  onChange={this.emailOnChanged}
+                  setValidFunction={this.setEmailValid}
+                  type="email"
+                  required={true}
+                  validates={this.state.clicked}
+                />
+                <Textbox
+                  id="password"
+                  disabled={this.state.loggingIn}
+                  label="Password"
+                  value={this.state.password}
+                  onChange={this.passwordOnChanged}
+                  setValidFunction={this.setPasswordValid}
+                  type="password"
+                  required={true}
+                  validates={this.state.clicked}
+                />
+                {this.state.loggingIn && (
+                  <Progress
+                    animated={true}
+                    color="success"
+                    value="100"
+                    className="mb-2"
                   />
-                </FormGroup>
-                <FormGroup className="danger">
-                  <Label for="password">Password</Label>
-                  <Input
-                    type="password"
-                    name="password"
-                    id="password"
-                    disabled={this.state.loggingIn}
-                    value={this.state.password}
-                    onChange={this.passwordOnChanged}
-                  />
-                </FormGroup>
+                )}
                 <Button
                   onClick={this.submit}
                   color={this.state.loggingIn ? "gray" : "primary"}
