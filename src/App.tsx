@@ -9,6 +9,7 @@ import UserType from "./types/userType";
 interface IAppProps extends RouteComponentProps<any> {}
 
 interface IAppStates {
+  resetUser: any;
   user: any;
   setUser: any;
 }
@@ -17,6 +18,7 @@ class App extends React.Component<IAppProps, IAppStates> {
   constructor(props: any) {
     super(props);
     this.state = {
+      resetUser: this.resetUser,
       setUser: this.setUser,
       user: null
     };
@@ -25,6 +27,12 @@ class App extends React.Component<IAppProps, IAppStates> {
   public setUser = (newUser: UserType | null) => {
     this.setState({
       user: newUser
+    });
+  };
+
+  public resetUser = () => {
+    this.setState({
+      user: null
     });
   };
 

@@ -1,7 +1,15 @@
 import * as React from "react";
+import UserType from "../types/userType";
 
 const UserContext = React.createContext({
-  setUser: null,
+  resetUser: () => {
+    let user;
+    user = user;
+  },
+  setUser: (newUser: UserType | null) => {
+    newUser = null;
+  },
+
   user: null
 });
 

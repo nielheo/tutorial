@@ -74,9 +74,9 @@ export default class LoginForm extends React.Component<
           });
         }
 
-        // if (isValid) {
-        this.props.setUser({ email: this.state.email });
-        // }
+        if (isValid) {
+          this.props.setUser({ email: this.state.email });
+        }
       }
     );
   };

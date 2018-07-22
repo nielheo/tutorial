@@ -13,6 +13,7 @@ import {
   NavLink,
   UncontrolledDropdown
 } from "reactstrap";
+import UserContext from "../../contexts/userContext";
 
 class AppBar extends React.Component<{}, { isOpen: boolean }> {
   constructor(props: any) {
@@ -31,60 +32,76 @@ class AppBar extends React.Component<{}, { isOpen: boolean }> {
 
   public render() {
     return (
-      <Navbar color="dark" dark={true} expand="md">
-        <NavbarBrand href="/">React's Tutorial</NavbarBrand>
-        <NavbarToggler onClick={this.toggle} />
-        <Collapse isOpen={this.state.isOpen} navbar={true}>
-          <Nav className="ml-auto" navbar={true}>
-            <NavItem>
-              <NavLink to="/components/" tag={RRNavLink}>
-                Components
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://github.com/">GitHub</NavLink>
-            </NavItem>
-            <UncontrolledDropdown nav={true} inNavbar={true}>
-              <DropdownToggle nav={true} caret={true}>
-                Options
-              </DropdownToggle>
-              <DropdownMenu right={true}>
-                <DropdownItem>
-                  <Nav
-                    to="/dashboard"
-                    className="dropdown-item"
-                    activeClassName="dropdown-item"
-                    tag={RRNavLink}
-                  >
-                    Dashboard
-                  </Nav>
-                </DropdownItem>
-                <DropdownItem>
-                  <Nav
-                    to="/orderlist"
-                    className="dropdown-item"
-                    activeClassName="dropdown-item"
-                    tag={RRNavLink}
-                  >
-                    Order List
-                  </Nav>
-                </DropdownItem>
-                <DropdownItem divider={true} />
-                <DropdownItem>
-                  <Nav
-                    to="/login"
-                    className="dropdown-item"
-                    activeClassName="dropdown-item"
-                    tag={RRNavLink}
-                  >
-                    Login
-                  </Nav>
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </Nav>
-        </Collapse>
-      </Navbar>
+      <UserContext.Consumer>
+        {({ resetUser, setUser, user }) => (
+          <Navbar color="dark" dark={true} expand="md">
+            <NavbarBrand href="/">React's Tutorial</NavbarBrand>
+            <NavbarToggler onClick={this.toggle} />
+            <Collapse isOpen={this.state.isOpen} navbar={true}>
+              <Nav className="ml-auto" navbar={true}>
+                <NavItem>
+                  <NavLink to="/components/" tag={RRNavLink}>
+                    Components
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="https://github.com/">GitHub</NavLink>
+                </NavItem>
+                <UncontrolledDropdown nav={true} inNavbar={true}>
+                  <DropdownToggle nav={true} caret={true}>
+                    Options
+                  </DropdownToggle>
+                  <DropdownMenu right={true}>
+                    <DropdownItem>
+                      <Nav
+                        to="/dashboard"
+                        className="dropdown-item"
+                        activeClassName="dropdown-item"
+                        tag={RRNavLink}
+                      >
+                        Dashboard
+                      </Nav>
+                    </DropdownItem>
+                    <DropdownItem>
+                      <Nav
+                        to="/orderlist"
+                        className="dropdown-item"
+                        activeClassName="dropdown-item"
+                        tag={RRNavLink}
+                      >
+                        Order List
+                      </Nav>
+                    </DropdownItem>
+                    <DropdownItem divider={true} />
+                    <DropdownItem>
+                      {user !== null ? (
+                        <Nav
+                          className="dropdown-item"
+                          activeClassName="dropdown-item"
+                          tag={RRNavLink}
+                          onClick={resetUser}
+                          to="/"
+                        >
+                          Logout
+                        </Nav>
+                      ) : (
+                        <Nav
+                          to="/login"
+                          className="dropdown-item"
+                          activeClassName="dropdown-item"
+                          tag={RRNavLink}
+                        >
+                          Login
+                        </Nav>
+                      )}
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </Nav>
+            </Collapse>
+          </Navbar>
+        )}
+      </UserContext.Consumer>
     );
   }
 }
