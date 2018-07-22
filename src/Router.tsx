@@ -5,8 +5,15 @@ import Home from "./components/home";
 import Login from "./components/login";
 import OrderList from "./components/orderlist";
 
-class Router extends React.Component {
+interface IRouterProps {
+  loggedIn: boolean;
+}
+
+class Router extends React.Component<IRouterProps, {}> {
   public render() {
+    if (!this.props.loggedIn) {
+      return <Login />;
+    }
     return (
       <Switch>
         <Route exac={true} path="/dashboard" component={Dashboard} />

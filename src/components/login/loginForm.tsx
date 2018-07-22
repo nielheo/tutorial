@@ -10,6 +10,7 @@ import {
   Row
 } from "reactstrap";
 import Textbox from "../../controls/Textbox";
+import UserType from "../../types/userType";
 
 interface ILoginStates {
   clicked: boolean;
@@ -21,7 +22,15 @@ interface ILoginStates {
   passwordInvalid: boolean;
 }
 
-export default class LoginForm extends React.Component<{}, ILoginStates> {
+interface ILoginProps {
+  setUser: any;
+  user: UserType | null;
+}
+
+export default class LoginForm extends React.Component<
+  ILoginProps,
+  ILoginStates
+> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -64,6 +73,10 @@ export default class LoginForm extends React.Component<{}, ILoginStates> {
             loggingIn: isValid
           });
         }
+
+        // if (isValid) {
+        this.props.setUser({ email: this.state.email });
+        // }
       }
     );
   };
@@ -95,6 +108,7 @@ export default class LoginForm extends React.Component<{}, ILoginStates> {
               }}
             >
               <CardTitle>Login</CardTitle>
+              <div>{this.props.user && this.props.user.email}</div>
               <Form>
                 <Textbox
                   id="email"
