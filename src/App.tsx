@@ -6,10 +6,10 @@ import Router from "./Router";
 
 interface IAppProps extends RouteComponentProps<any> {}
 
-class App extends React.Component<IAppProps, {}> {
+class App extends React.Component<IAppProps, any> {
   public render() {
     return (
-      <div>
+      <React.Fragment>
         {this.props.location.pathname !== "/login" && <AppBar />}
         <Container fluid={true}>
           <Row
@@ -22,7 +22,7 @@ class App extends React.Component<IAppProps, {}> {
             </Col>
           </Row>
         </Container>
-      </div>
+      </React.Fragment>
     );
   }
 }
