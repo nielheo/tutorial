@@ -13,9 +13,6 @@ import Textbox from "../../controls/Textbox";
 import UserType from "../../types/userType";
 
 interface ILoginStates {
-  clicked: boolean;
-  dataValid: boolean;
-  loggingIn: boolean;
   email: string;
   emailInvalid: boolean;
   password: string;
@@ -23,7 +20,12 @@ interface ILoginStates {
 }
 
 interface ILoginProps {
+  clicked: boolean;
+  dataValid: boolean;
+  loggingIn: boolean;
   setUser: any;
+  updateClicked: (value: boolean) => void;
+  updateDataValid: (value: boolean) => void;
   user: UserType | null;
 }
 
@@ -34,11 +36,8 @@ export default class LoginForm extends React.Component<
   constructor(props: any) {
     super(props);
     this.state = {
-      clicked: false,
-      dataValid: false,
       email: "",
       emailInvalid: true,
-      loggingIn: false,
       password: "",
       passwordInvalid: true
     };
@@ -61,24 +60,16 @@ export default class LoginForm extends React.Component<
   };
 
   public submit = () => {
-    this.setState(
-      {
-        clicked: true
-      },
-      () => {
-        const isValid = !this.state.emailInvalid && !this.state.passwordInvalid;
-        if (isValid !== this.state.dataValid) {
-          this.setState({
-            dataValid: isValid,
-            loggingIn: isValid
-          });
-        }
+    this.props.updateClicked(true);
 
-        if (isValid) {
-          this.props.setUser({ email: this.state.email });
-        }
-      }
-    );
+    const isValid = !this.state.emailInvalid && !this.state.passwordInvalid;
+    if (isValid !== this.props.dataValid) {
+      this.props.updateDataValid(isValid);
+    }
+
+    if (isValid) {
+      this.props.setUser({ email: this.state.email });
+    }
   };
 
   public emailOnChanged = (e: any) => {
@@ -112,27 +103,27 @@ export default class LoginForm extends React.Component<
               <Form>
                 <Textbox
                   id="email"
-                  disabled={this.state.loggingIn}
+                  disabled={this.props.loggingIn}
                   label="Email"
                   value={this.state.email}
                   onChange={this.emailOnChanged}
                   setValidFunction={this.setEmailValid}
                   type="email"
                   required={true}
-                  validates={this.state.clicked}
+                  validates={this.props.clicked}
                 />
                 <Textbox
                   id="password"
-                  disabled={this.state.loggingIn}
+                  disabled={this.props.loggingIn}
                   label="Password"
                   value={this.state.password}
                   onChange={this.passwordOnChanged}
                   setValidFunction={this.setPasswordValid}
                   type="password"
                   required={true}
-                  validates={this.state.clicked}
+                  validates={this.props.clicked}
                 />
-                {this.state.loggingIn && (
+                {this.props.loggingIn && (
                   <Progress
                     animated={true}
                     color="success"
@@ -142,8 +133,8 @@ export default class LoginForm extends React.Component<
                 )}
                 <Button
                   onClick={this.submit}
-                  color={this.state.loggingIn ? "gray" : "primary"}
-                  disabled={this.state.loggingIn}
+                  color={this.props.loggingIn ? "gray" : "primary"}
+                  disabled={this.props.loggingIn}
                 >
                   Login
                 </Button>
