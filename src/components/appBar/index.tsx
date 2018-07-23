@@ -33,7 +33,7 @@ class AppBar extends React.Component<{}, { isOpen: boolean }> {
   public render() {
     return (
       <UserContext.Consumer>
-        {({ resetUser, setUser, user }) => (
+        {({ resetUser, user }) => (
           <Navbar color="dark" dark={true} expand="md">
             <NavbarBrand href="/">React's Tutorial</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />

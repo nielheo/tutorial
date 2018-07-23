@@ -44,19 +44,17 @@ class Textbox extends React.Component<ITextboxProps, { invalid: boolean }> {
   }
 
   public validate = () => {
-    if (this.props.validates) {
-      let valid = true;
-      if (this.props.required && this.props.value === "") {
-        valid = false;
-      }
+    let valid = true;
+    if (this.props.required && this.props.value === "") {
+      valid = false;
+    }
 
-      if (valid === this.state.invalid) {
-        this.setState({ invalid: !valid });
-      }
+    if (valid === this.state.invalid) {
+      this.setState({ invalid: !valid });
+    }
 
-      if (this.props.setValidFunction) {
-        this.props.setValidFunction(valid);
-      }
+    if (this.props.setValidFunction) {
+      this.props.setValidFunction(valid);
     }
   };
 
@@ -82,16 +80,20 @@ class Textbox extends React.Component<ITextboxProps, { invalid: boolean }> {
           value={this.props.value}
           onChange={this.onChanged}
           valid={this.props.valid}
-          invalid={this.props.invalid || this.state.invalid}
+          invalid={
+            (this.props.invalid || this.state.invalid) && this.props.validates
+          }
         />
-        {
-          // this.props.validates && (
-          // this.props.required &&
-          // this.props.value === "" &&
-          <FormFeedback>
-            {this.props.requiredMessage || this.props.label + " is required"}
-          </FormFeedback>
-          // )
+        {// this.props.validates && (
+        // this.props.required &&
+        // this.props.value === "" &&
+        (this.props.invalid || this.state.invalid) &&
+          this.props.validates && (
+            <FormFeedback>
+              {this.props.requiredMessage || this.props.label + " is required"}
+            </FormFeedback>
+          )
+        // )
         }
         <FormFeedback>{this.props.invalidMessage}</FormFeedback>
       </FormGroup>

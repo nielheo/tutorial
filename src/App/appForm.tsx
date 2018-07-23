@@ -47,7 +47,13 @@ class App extends React.Component<IAppProps, IAppStates> {
 
   public render() {
     return (
-      <UserContext.Provider value={this.state}>
+      <UserContext.Provider
+        value={{
+          resetUser: this.props.resetUser,
+          setUser: this.props.setUser,
+          user: this.props.user
+        }}
+      >
         {this.props.location.pathname !== "/login" && <AppBar />}
         <Container fluid={true}>
           <Row
