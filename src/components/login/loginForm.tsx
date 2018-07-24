@@ -44,6 +44,10 @@ export default class LoginForm extends React.Component<
   }
 
   public setEmailValid = (valid: boolean) => {
+    /* console.log("setEmailValid");
+    console.log(valid);
+    console.log(this.state.emailInvalid);
+    console.log("--0---"); */
     if (this.state.emailInvalid === valid) {
       this.setState({
         emailInvalid: !valid

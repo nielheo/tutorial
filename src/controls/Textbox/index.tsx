@@ -1,3 +1,4 @@
+import * as EmailValidator from "email-validator";
 import * as React from "react";
 import { FormFeedback, FormGroup, Input, Label } from "reactstrap";
 import { InputType } from "reactstrap/lib/Input";
@@ -25,7 +26,12 @@ interface ITextboxProps extends IOptionalTextboxProps {
   value: string;
 }
 
-class Textbox extends React.Component<ITextboxProps, { invalid: boolean }> {
+interface ITextboxStates {
+  invalid: boolean;
+  invalidEmail: boolean;
+}
+
+class Textbox extends React.Component<ITextboxProps, ITextboxStates> {
   public static defaultProps: IOptionalTextboxProps = {
     disabled: false,
     invalid: false,
@@ -39,7 +45,8 @@ class Textbox extends React.Component<ITextboxProps, { invalid: boolean }> {
   public constructor(props: any) {
     super(props);
     this.state = {
-      invalid: false
+      invalid: false,
+      invalidEmail: false
     };
   }
 
@@ -53,6 +60,17 @@ class Textbox extends React.Component<ITextboxProps, { invalid: boolean }> {
       this.setState({ invalid: !valid });
     }
 
+    if (this.props.type === "email") {
+      const emailValid = EmailValidator.validate(this.props.value);
+      valid = valid && emailValid;
+
+      if (emailValid === this.state.invalidEmail) {
+        this.setState({
+          invalidEmail: !emailValid
+        });
+      }
+    }
+
     if (this.props.setValidFunction) {
       this.props.setValidFunction(valid);
     }
@@ -64,7 +82,7 @@ class Textbox extends React.Component<ITextboxProps, { invalid: boolean }> {
 
   public onChanged = (e: any) => {
     this.props.onChange(e);
-    this.validate();
+    // this.validate();
   };
 
   public render() {
@@ -81,7 +99,10 @@ class Textbox extends React.Component<ITextboxProps, { invalid: boolean }> {
           onChange={this.onChanged}
           valid={this.props.valid}
           invalid={
-            (this.props.invalid || this.state.invalid) && this.props.validates
+            (this.props.invalid ||
+              this.state.invalid ||
+              this.state.invalidEmail) &&
+            this.props.validates
           }
         />
         {// this.props.validates && (
@@ -95,6 +116,8 @@ class Textbox extends React.Component<ITextboxProps, { invalid: boolean }> {
           )
         // )
         }
+        {this.props.validates &&
+          this.state.invalidEmail && <FormFeedback>Invalid email</FormFeedback>}
         <FormFeedback>{this.props.invalidMessage}</FormFeedback>
       </FormGroup>
     );
