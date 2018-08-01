@@ -1,4 +1,5 @@
 import * as React from "react";
+import FacebookLogin from "react-facebook-login";
 import {
   Button,
   Card,
@@ -9,6 +10,7 @@ import {
   Progress,
   Row
 } from "reactstrap";
+
 import Textbox from "../../controls/Textbox";
 import UserType from "../../types/userType";
 
@@ -88,6 +90,10 @@ export default class LoginForm extends React.Component<
     });
   };
 
+  public responseFacebook = (response: any) => {
+    console.log(response);
+  };
+
   public render() {
     return (
       <Container>
@@ -139,9 +145,23 @@ export default class LoginForm extends React.Component<
                   onClick={this.submit}
                   color={this.props.loggingIn ? "gray" : "primary"}
                   disabled={this.props.loggingIn}
+                  style={{
+                    width: "100%"
+                  }}
                 >
                   Login
                 </Button>
+                <Row>
+                  <Col sm={12} className="py-3">
+                    <FacebookLogin
+                      appId="532067183877497"
+                      autoLoad={true}
+                      fields="name,email,picture"
+                      scope="public_profile,user_friends"
+                      callback={this.responseFacebook}
+                    />
+                  </Col>
+                </Row>
               </Form>
             </Card>
           </Col>
