@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const MemberFacebook = sequelize.define("memberFacebook", {
+  const memberFacebook = sequelize.define("memberFacebook", {
     email: {
       type: DataTypes.STRING,
       allowNull: false
@@ -22,12 +22,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  MemberFacebook.associate = models => {
-    MemberFacebook.belongsTo(models.Member, {
+  memberFacebook.associate = models => {
+    memberFacebook.belongsTo(models.member, {
       foreignKey: "memberId",
       onDelete: "CASCADE"
     });
   };
 
-  return MemberFacebook;
+  return memberFacebook;
 };

@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    queryInterface.createTable("Members", {
+    queryInterface.createTable("members", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -34,7 +34,7 @@ module.exports = {
         type: Sequelize.DATE
       }
     }),
-      queryInterface.createTable("MemberFacebooks", {
+      queryInterface.createTable("memberFacebooks", {
         id: {
           allowNull: false,
           autoIncrement: true,
@@ -73,7 +73,7 @@ module.exports = {
           type: Sequelize.INTEGER,
           onDelete: "CASCADE",
           references: {
-            model: "Members",
+            model: "members",
             key: "id",
             as: "memberId"
           }
@@ -82,7 +82,7 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    queryInterface.dropTable("MemberFacebooks"),
-      queryInterface.dropTable("Members");
+    queryInterface.dropTable("memberFacebooks"),
+      queryInterface.dropTable("members");
   }
 };
