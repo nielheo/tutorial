@@ -1,0 +1,18 @@
+{
+  "development": {
+    "username": "PortO",
+    "password": "Port0",
+    "database": "turtle-race",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "PortO",
+    "password": "Port0",
+    "database": "my-porto",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres"
+  }
+}

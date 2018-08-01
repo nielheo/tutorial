@@ -1,4 +1,6 @@
-import { ApolloServer, gql } from "apollo-server";
+import { ApolloServer, gql } from "apollo-server-express";
+import cors from "cors";
+import express from "express";
 
 // This is a (sample) collection of books we'll be able to query
 // the GraphQL server for.  A more complete example might fetch
@@ -40,13 +42,24 @@ const resolvers = {
   }
 };
 
+const app = express();
+
+var corsOptions = {
+  origin: function(origin, callback) {
+    //var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+    callback(null, true);
+  },
+  credentials: true
+};
+app.use(cors(corsOptions));
+
 // In the most basic sense, the ApolloServer can be started
 // by passing type definitions (typeDefs) and the resolvers
 // responsible for fetching the data for those types.
 const server = new ApolloServer({ typeDefs, resolvers });
 
-// This `listen` method launches a web-server.  Existing apps
-// can utilize middleware options, which we'll discuss later.
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+server.applyMiddleware({ app }); // app is from an existing express app
+
+app.listen({ port: 4000 }, () =>
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+);
