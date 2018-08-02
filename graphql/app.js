@@ -1,28 +1,14 @@
 import { ApolloServer, gql } from "apollo-server-express";
 import cors from "cors";
 import express from "express";
+import bodyParser from "body-parser";
 
 import { typeDefs, resolvers } from "./server/schemas/schema";
+import authFacebook from "./server/controllers/authFacebook";
 
 // This is a (sample) collection of books we'll be able to query
 // the GraphQL server for.  A more complete example might fetch
 // from an existing data source like a REST API or database.
-const memberFacebook = {
-  id: 111,
-  name: "Daniel Hartono",
-  email: "niel.heo@gmail.com",
-  accessToken: "Daniel Access Token",
-  userId: "Daniel User Id",
-  signedRequest: "Daniel signedRequest"
-};
-
-const member = {
-  id: 1,
-  name: "Daniel Hartono",
-  email: "niel.heo@gmail.com",
-  active: true,
-  memberFacebook: memberFacebook
-};
 
 const app = express();
 
@@ -33,6 +19,9 @@ var corsOptions = {
   },
   credentials: true
 };
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(authFacebook);
 app.use(cors(corsOptions));
 
 // In the most basic sense, the ApolloServer can be started
