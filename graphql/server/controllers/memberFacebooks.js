@@ -9,5 +9,14 @@ module.exports = {
     return MemberFacebook.findOne({ where: query })
       .then(memberFacebook => memberFacebook)
       .catch(error => error);
+  },
+
+  retrieveWithMember(req, res) {
+    let query = {};
+    if (req.userId) query.userId = req.userId;
+
+    return MemberFacebook.findOne({ where: query })
+      .then(memberFacebook => memberFacebook)
+      .catch(error => error);
   }
 };
