@@ -1,5 +1,6 @@
 import * as React from "react";
-import FacebookLogin from "react-facebook-login";
+// import FacebookLoginWithButton from "react-facebook-login";
+
 import {
   Button,
   Card,
@@ -10,9 +11,11 @@ import {
   Progress,
   Row
 } from "reactstrap";
+// import Config from "../../config";
 
 import Textbox from "../../controls/Textbox";
 import UserType from "../../types/userType";
+import FacebookLogin from "./facebookLogin";
 
 interface ILoginStates {
   email: string;
@@ -91,10 +94,15 @@ export default class LoginForm extends React.Component<
   };
 
   public responseFacebook = (response: any) => {
-    console.log(response);
+    // console.log(response);
   };
 
   public render() {
+    console.log(process);
+    console.log(process.env);
+
+    console.log(process.env.NODE_ENV);
+
     return (
       <Container>
         <Row style={{ minHeight: "100vh" }} className="align-items-center">
@@ -153,13 +161,7 @@ export default class LoginForm extends React.Component<
                 </Button>
                 <Row>
                   <Col sm={12} className="py-3">
-                    <FacebookLogin
-                      appId="532067183877497"
-                      autoLoad={true}
-                      fields="name,email,picture"
-                      scope="public_profile,user_friends"
-                      callback={this.responseFacebook}
-                    />
+                    <FacebookLogin />
                   </Col>
                 </Row>
               </Form>

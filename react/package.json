@@ -8,6 +8,9 @@
     "@types/react-facebook-login": "^3.6.4",
     "@types/react-router-dom": "^4.2.7",
     "@types/reactstrap": "^6.0.0",
+    "amazon-cognito-identity-js": "^2.0.20",
+    "aws-amplify": "^1.0.5",
+    "aws-sdk": "^2.287.0",
     "bootstrap": "^4.1.2",
     "email-validator": "^2.0.4",
     "react": "^16.4.1",
@@ -18,7 +21,7 @@
     "reactstrap": "^6.3.0"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
+    "start": "react-scripts-ts start --env=dev",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
