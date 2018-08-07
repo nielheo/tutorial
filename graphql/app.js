@@ -27,7 +27,13 @@ app.use(cors(corsOptions));
 // In the most basic sense, the ApolloServer can be started
 // by passing type definitions (typeDefs) and the resolvers
 // responsible for fetching the data for those types.
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => ({
+    authScope: req.headers.x_access_token
+  })
+});
 
 server.applyMiddleware({ app }); // app is from an existing express app
 

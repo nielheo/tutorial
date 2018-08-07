@@ -1,7 +1,8 @@
 const memberController = require("../../controllers").members;
 
 const rootQueryResolvers = {
-  async member(rootObj, { email }) {
+  async member(rootObj, { email }, context) {
+    // console.log(context);
     return await memberController.retrieve({ email });
   }
 };
